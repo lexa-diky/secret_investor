@@ -2,9 +2,10 @@ import json
 import logging
 import os.path
 
-from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
+
+from create_updater import create_updater
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -48,7 +49,7 @@ def rofl(update, context):
                              text="https://www.youtube.com/watch?v=vTIIMJ9tUc8&list=PL8YDBoBkBP-b1E8ID91t29CwO4gRC8yzW&index=209")
 
 
-updater = Updater(token="TODO")
+updater = create_updater()
 dispatcher = updater.dispatcher
 
 start_handler = CommandHandler('start', start)
