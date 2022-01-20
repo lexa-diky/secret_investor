@@ -24,16 +24,16 @@ with open("data.json", "r") as file:
         what = clean_data[receiver_keys[idx]]
         send_data.append({
             "chat_id": int(who["chat_id"]),
-            "messsage": f"Oh ho ho. Secret Investor is here:\n{what['stock']}"
+            "message": f"Oh ho ho. Secret Investor is here:\n{what['stock']}"
         })
-        message = '[{to_first_name} {to_last_name}] will receive "{stock}" from [{from_first_name} {from_last_name}]' \
-            .format(
-                to_first_name=who['first_name'],
-                to_last_name=who['last_name'],
-                stock=what['stock'],
-                from_first_name=what['first_name'],
-                from_last_name=what['last_name'],
-            )
+        name_to = "[%s %s @%s]" % (who['first_name'], who['last_name'], who['username'])
+        name_from = "[%s %s @%s]" % (what['first_name'], what['last_name'], what['username'])
+        message = '#{id} {name_to} will receive "{stock}" from {name_from}'.format(
+            id=idx,
+            name_to=name_to,
+            name_from=name_from,
+            stock=what['stock'],
+        )
         print(message)
 
     yes = input("Commit to this result? (y/n)\n")
@@ -44,5 +44,5 @@ with open("data.json", "r") as file:
         for entry in send_data:
             bot.send_message(
                 chat_id=entry["chat_id"],
-                text=entry["messsage"]
+                text=entry["message"]
             )
